@@ -8,12 +8,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.fragment.R;
+import com.android.fragment.utils.Constants;
 
 public class FragmentB extends Fragment {
     final String TAG = "ActivityFragmentB";
-
+    TextView textView;
+    String val="";
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -30,7 +33,18 @@ public class FragmentB extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG,"onCreateView");
+        Bundle bundle = getArguments();
         View view = inflater.inflate(R.layout.frag2,container,false);
+        textView = view.findViewById(R.id.frag2text);
+        if(savedInstanceState!=null){
+            val = savedInstanceState.getString(Constants.TEXT);
+            textView.setText(val);
+        }
+        if(bundle!=null){
+            val = bundle.getString(Constants.TEXT);
+            textView.setText(val);
+        }
+
         return view;
     }
 
@@ -62,6 +76,7 @@ public class FragmentB extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.d(TAG,"onSaveInstanceState");
+        outState.putString(Constants.TEXT,val);
     }
 
     @Override

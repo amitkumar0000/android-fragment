@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.fragment.MainActivity;
 import com.android.fragment.R;
 import com.android.fragment.utils.Constants;
 
@@ -27,10 +28,12 @@ public class FragmentA extends Fragment {
     Button button;
     TextView textView;
     int count;
+    MainActivity activity;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        this.activity = (MainActivity) context;
         Log.d(TAG,"onAttach");
     }
 
@@ -57,6 +60,7 @@ public class FragmentA extends Fragment {
             public void onClick(View view) {
                 Log.d(TAG,"onClick");
                 textView.setText(String.valueOf(++count));
+                activity.respond(String.valueOf(count));
             }
         });
         return view;

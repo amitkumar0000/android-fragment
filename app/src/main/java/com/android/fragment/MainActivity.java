@@ -1,20 +1,18 @@
 package com.android.fragment;
-
-import android.content.Intent;
-import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 
+import com.android.fragment.interfaces.ICommunication;
 import com.android.fragment.uidesign.FragmentA;
 import com.android.fragment.uidesign.FragmentB;
+import com.android.fragment.utils.Constants;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ICommunication{
 
     private final String TAG = "MainActivity";
-
+    FragmentA fragmentA;
+    FragmentB fragmentB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +30,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void attachFragA() {
-        FragmentA fragmentA = new FragmentA();
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame1,fragmentA).commitAllowingStateLoss();
+        fragmentA = new FragmentA();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame1,fragmentA,"Fragment1").commitAllowingStateLoss();
 
     }
 
     private void attachFragB() {
-        FragmentB fragmentB = new FragmentB();
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame2,fragmentB).commitAllowingStateLoss();
+        fragmentB = new FragmentB();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame2,fragmentB,"Fragment2").commitAllowingStateLoss();
 
     }
 
@@ -90,5 +88,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG,"onDestroy");
+    }
+
+    @Override
+    public void respond(String text) {
+        Log.d(TAG," Communication From Fragment");
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.TEXT,text);
+
+        FragmentB fragmentB = new FragmentB();
+        fragmentB.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame2,fragmentB,"Fragment2").commitAllowingStateLoss();
+
+
     }
 }
