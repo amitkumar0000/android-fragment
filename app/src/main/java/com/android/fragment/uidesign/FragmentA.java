@@ -50,6 +50,8 @@ public class FragmentA extends Fragment {
         View view = inflater.inflate(R.layout.frag1,container,false);
         button = view.findViewById(R.id.click);
         textView = view.findViewById(R.id.frag1text);
+        textView.setText(String.valueOf(count));
+        //SavedInstance check become invalid as setRetainInstance is true
         if(savedInstanceState!=null){
             count = savedInstanceState.getInt(Constants.COUNT);
             Log.d(TAG,"Restoring the count value");
@@ -71,6 +73,7 @@ public class FragmentA extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d(TAG,"onActivityCreated");
         super.onActivityCreated(savedInstanceState);
+        setRetainInstance(true);
     }
 
     @Override
