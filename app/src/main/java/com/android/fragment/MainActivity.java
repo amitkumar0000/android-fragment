@@ -21,7 +21,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG,"onCreate");
-        attachFrag();
+        if(savedInstanceState == null) {
+            attachFrag();
+        }
     }
 
     public void attachFrag(){

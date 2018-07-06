@@ -8,8 +8,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.android.fragment.R;
+import com.android.fragment.utils.Constants;
+
+import org.w3c.dom.Text;
 
 /*
 android.support.v4.app.Fragmentandroid.
@@ -19,6 +24,9 @@ It was introduced in Android 3 (API 11).
 public class FragmentA extends Fragment {
 
     final String TAG = "ActivityFragmentA";
+    Button button;
+    TextView textView;
+    int count;
 
     @Override
     public void onAttach(Context context) {
@@ -37,6 +45,20 @@ public class FragmentA extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG,"onCreateView");
         View view = inflater.inflate(R.layout.frag1,container,false);
+        button = view.findViewById(R.id.click);
+        textView = view.findViewById(R.id.frag1text);
+        if(savedInstanceState!=null){
+            count = savedInstanceState.getInt(Constants.COUNT);
+            Log.d(TAG,"Restoring the count value");
+            textView.setText(String.valueOf(count));
+        }
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG,"onClick");
+                textView.setText(String.valueOf(++count));
+            }
+        });
         return view;
 
     }
@@ -69,6 +91,7 @@ public class FragmentA extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.d(TAG,"onSaveInstanceState");
+        outState.putInt(Constants.COUNT,count);
     }
 
     @Override
@@ -92,10 +115,6 @@ public class FragmentA extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(TAG,"onDetach");
-    }
-
-    public void click(View view){
         Log.d(TAG,"onDetach");
     }
 }
