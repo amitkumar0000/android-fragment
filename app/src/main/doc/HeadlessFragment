@@ -1,0 +1,27 @@
+Base Activity and Headless Fragment
+------------------------------------
+To hold common code , that being used by different activity .
+Base Activity can be used.
+Base activity is a activity without any layout. All common code can be written here.
+
+Problems with Base Activity
+    if project grow bigger and bigger. Base Activity code will keep increasing.
+    Some feature may not be used by some activity and need to take care of this.
+    Base Activity overhead will keep increasing.
+
+    Helper class can come to resuce here. but helper class are not activity life cycle aware.
+    Also context or activity instance need to pass helper class. which may cause memory leak.
+
+    Best solution is Headless Fragment.
+    Headless fragment  is effective helper class with life cycle aware as it is attach to activity.
+
+
+To create Headless Fragment
+--------------------------
+Create a Fragment without any layout
+and call setRetainInstance(true) in onCreate() method of Fragment.
+
+
+
+
+
